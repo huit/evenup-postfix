@@ -32,7 +32,7 @@ relay_domains = <%= @relay_domains %>
 <% end -%>
 <% if @relay_username != '' and @relay_password != '' -%>
 smtp_sasl_auth_enable = yes
-smtp_sasl_password_maps = hash:/etc/postfix/relay_password %>
+smtp_sasl_password_maps = hash:/etc/postfix/relay_password
 <% end -%>
 <% if @tls -%>
 smtp_use_tls = yes
