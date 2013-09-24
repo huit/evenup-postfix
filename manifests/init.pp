@@ -47,6 +47,14 @@
 #   Boolean.  Enable TLS for SMTP connections.
 #   Default: false
 #
+# [*tls_bundle*]
+#   String.  Path to TLS certificate bundle.
+#   Default: Sensible defaults for RedHat and Debian systems, otherwise false.
+#
+# [*tls_package*]
+#   String.  Package containing TLS certificate bundle..
+#   Default: Sensible defaults for RedHat and Debian systems, otherwise false.
+#
 # [*logging*]
 #   String.  Additonal logging inclusion
 #   Default: ''
@@ -85,15 +93,22 @@ class postfix (
   $relay_password = $postfix::params::relay_password,
   $relay_port     = $postfix::params::relay_port,
   $tls            = $postfix::params::tls,
+  $tls_bundle     = $postfix::params::tls_bundle,
+  $tls_package    = $postfix::params::tls_package,
   $logging        = $postfix::params::logging,
   $monitoring     = $postfix::params::monitoring,
 ) inherits postfix::params {
 
-  class { 'postfix::install': }
+  class { 'postfix::install':
+    tls            => $postfix::tls,
+    tls_package    => $postfix::tls_package,
+  }
   class { 'postfix::config':
     mydomain       => $postfix::mydomain,
     smtp_relay     => $postfix::smtp_relay,
     tls            => $postfix::tls,
+    tls_bundle     => $postfix::tls_bundle,
+    tls_package    => $postfix::tls_package,
     relay_networks => $postfix::relay_networks,
     relay_domains  => $postfix::relay_domains,
     relay_host     => $postfix::relay_host,

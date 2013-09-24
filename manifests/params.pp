@@ -13,4 +13,19 @@ class postfix::params {
   $tls            = false
   $logging        = ''
   $monitoring     = ''
+
+  case $::osfamily {
+    'RedHat': {
+      $tls_bundle = '/etc/pki/tls/certs/ca-bundle.crt'
+      $tls_package = 'openssl'
+    }
+    'Debian': {
+      $tls_bundle = '/etc/ssl/certs/ca-certificates.crt'
+      $tls_package = 'ca-certificates'
+    }
+    default: {
+      $tls_bundle = false
+      $tls_package = false
+    }
+  }
 } # Class:: postfix::params

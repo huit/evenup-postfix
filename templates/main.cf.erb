@@ -24,7 +24,7 @@ mynetworks = 127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128 <%= @relay_networks %>
 inet_interfaces = all
 <% else %>
 mynetworks = 127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128
-relayhost = <%= @relay_host %>
+relayhost = <%= @relay_host -%>:<%= @relay_port %>
 inet_interfaces = loopback-only
 <% end %>
 <% if @relay_domains != '' -%>
@@ -32,10 +32,14 @@ relay_domains = <%= @relay_domains %>
 <% end -%>
 <% if @relay_username != '' and @relay_password != '' -%>
 smtp_sasl_auth_enable = yes
+smtp_sasl_security_options = noanonymous
 smtp_sasl_password_maps = hash:/etc/postfix/relay_password
 <% end -%>
-<% if @tls -%>
+<% if @tls and @tls_bundle and @tls_package -%>
 smtp_use_tls = yes
+smtp_tls_security_level = encrypt
+smtp_tls_note_starttls_offer = true
+smtp_tls_CAfile = <%= @tls_bundle %>
 <% end -%>
 mailbox_size_limit = 0
 recipient_delimiter = +

@@ -16,6 +16,8 @@ class postfix::config (
   $mydomain,
   $smtp_relay,
   $tls,
+  $tls_bundle,
+  $tls_package,
   $relay_networks,
   $relay_domains,
   $relay_host,
