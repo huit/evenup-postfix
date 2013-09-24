@@ -53,7 +53,7 @@ class postfix::config (
 
     exec { 'postmap-relay_password':
       path        => '/usr/bin:/usr/sbin:/bin:/sbin',
-      command     => 'postmap /etc/postfix/relay_password',
+      command     => 'postmap hash:/etc/postfix/relay_password',
       refreshonly => true,
       logoutput   => 'on_failure',
       require     => File['/etc/postfix/relay_password'],
