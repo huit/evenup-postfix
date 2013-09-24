@@ -38,7 +38,7 @@ smtp_sasl_password_maps = hash:/etc/postfix/relay_password
 <% if @tls and @tls_bundle and @tls_package -%>
 smtp_use_tls = yes
 smtp_tls_security_level = encrypt
-smtp_tls_note_starttls_offer = true
+smtp_tls_note_starttls_offer = yes
 smtp_tls_CAfile = <%= @tls_bundle %>
 <% end -%>
 mailbox_size_limit = 0
